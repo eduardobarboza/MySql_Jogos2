@@ -3,7 +3,7 @@ import * as Empresas from '../service/empresa.js';
 
 const router = express.Router();
 
-router.get('/empresa', async (req, res) => {
+router.get('/jogo', async (req, res) => {
     try {
         let nome = req.query.nome;
         let result;
@@ -29,7 +29,7 @@ router.get('/empresa', async (req, res) => {
 });
 
 
-router.get('/empresa/:id', async (req, res) => {
+router.get('/jogo/:id', async (req, res) => {
     try {
         let id = req.params.id;
         let result = await Empresas.consultarPorId(id);
@@ -50,15 +50,15 @@ router.get('/empresa/:id', async (req, res) => {
 });
 
 
-router.post('/empresa',async(req,res)=>{
+router.post('/jogo',async(req,res)=>{
     try {
         const { nome, valor } = req.body; // Supondo que os dados enviados tenham campos 'nome' e 'valorDeMercado'
 
         // Chamar a função cadastrar com os dados recebidos
-        const novaEmpresa = await Empresas.cadastrar(nome, valor);
+        const novoJogo = await Empresas.cadastrar(nome, valor);
 
         // Enviar uma resposta com os dados da nova empresa cadastrada
-        res.status(201).json(novaEmpresa);
+        res.status(201).json(novoJogo);
     } catch (error) {
         // Lidar com erros de forma adequada, por exemplo, retornando um status 500
         console.error('Erro na consulta por ID:', error);
@@ -70,16 +70,16 @@ router.post('/empresa',async(req,res)=>{
     }
 })
 
-router.put('/empresa/:id',async(req,res)=>{
+router.put('/jogo/:id',async(req,res)=>{
     try {
         const id = req.params.id;
         const { nome, valor } = req.body; // Supondo que os dados enviados tenham campos 'nome' e 'valorDeMercado'
 
         // Chamar a função cadastrar com os dados recebidos
-        const empresaAlterada = await Empresas.alterar(id, nome, valor);
+        const jogoAlterado = await Empresas.alterar(id, nome, valor);
 
         // Enviar uma resposta com os dados da nova empresa cadastrada
-        res.status(201).json(empresaAlterada);
+        res.status(201).json(jogoAlterado);
     } catch (error) {
         // Lidar com erros de forma adequada, por exemplo, retornando um status 500
         console.error('Erro na consulta por ID:', error);
@@ -91,7 +91,7 @@ router.put('/empresa/:id',async(req,res)=>{
     }
 })
 
-router.delete('/empresa/:id',async(req,res)=>{
+router.delete('/jogo/:id',async(req,res)=>{
     try{
         let id = req.params.id;
         const result = await Empresas.deletar(id);

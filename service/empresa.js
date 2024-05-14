@@ -3,7 +3,7 @@ import  pool  from '../data/index.js';
 export const consultar = async (filtro = '') => {
     try {
         const cx = await pool.getConnection();
-        const cmdSql = `SELECT * FROM empresa WHERE empresa.nome LIKE ?`;
+        const cmdSql = `SELECT * FROM jogo WHERE jogo.nome LIKE ?`;
         const [dados, meta_dados] = await cx.query(cmdSql, [`%${filtro}%`]);
         cx.release();
         return dados;
@@ -15,7 +15,7 @@ export const consultar = async (filtro = '') => {
 export const consultarPorId = async (id) => {
     try {        
         const cx = await pool.getConnection();
-        const cmdSql = 'SELECT * FROM empresa WHERE empresa.id = ?';
+        const cmdSql = 'SELECT * FROM jogo WHERE jogo.id = ?';
         const [dados, meta_dados] = await cx.query(cmdSql,[id]);
         cx.release();
         return dados;
@@ -24,17 +24,17 @@ export const consultarPorId = async (id) => {
     }
 };
 
-export const cadastrar = async (Nome, ValorDeMercado) => {
+export const cadastrar = async (nome, preço) => {
     try {
         const cx = await pool.getConnection();
-        const cmdSql = 'INSERT INTO empresa(Nome, ValorDeMercado) VALUES (?, ?)';
-        const [execucao] = await cx.query(cmdSql, [Nome, ValorDeMercado]);        
+        const cmdSql = 'INSERT INTO jogo(nome, preço) VALUES (?, ?)';
+        const [execucao] = await cx.query(cmdSql, [nome, preço]);        
         if(execucao.affectedRows > 0){
             const [result] = await cx.query('SELECT LAST_INSERT_ID() as lastId');
             const lastId = result[0].lastId;
-            const [novaEmpresa, meta_dados] = await cx.query('SELECT * FROM empresa WHERE id = ?', [lastId]);
+            const [novoJogo, meta_dados] = await cx.query('SELECT * FROM jogo WHERE id = ?', [lastId]);
             cx.release();
-            return novaEmpresa;
+            return novoJogo;
         }
         cx.release();
         return execucao;
@@ -44,15 +44,15 @@ export const cadastrar = async (Nome, ValorDeMercado) => {
     }
 };
 
-export const alterar = async (Id, Nome, ValorDeMercado) => {
+export const alterar = async (id, nome, preço) => {
     try {
         const cx = await pool.getConnection();
-        const cmdSql = 'UPDATE empresa SET Nome = ?,ValorDeMercado = ? WHERE Id = ?';
-        const [execucao] = await cx.query(cmdSql, [Nome, ValorDeMercado, Id]);
+        const cmdSql = 'UPDATE jogo SET nome = ?,preço = ? WHERE id = ?';
+        const [execucao] = await cx.query(cmdSql, [nome, preço, id]);
         if(execucao.affectedRows > 0){            
-            const [empresaAlterada, meta_dados] = await cx.query('SELECT * FROM empresa WHERE id = ?', [Id]);
+            const [jogoAlterado, meta_dados] = await cx.query('SELECT * FROM jogo WHERE id = ?', [id]);
             cx.release();
-            return empresaAlterada;
+            return jogoAlterado;
         }
         cx.release();
         return execucao;
@@ -61,11 +61,11 @@ export const alterar = async (Id, Nome, ValorDeMercado) => {
     }
 };
 
-export const deletar = async (Id) => {
+export const deletar = async (id) => {
     try {
         const cx = await pool.getConnection();
-        const cmdSql = 'DELETE FROM empresa WHERE Id = ?';
-        const [execucao] = await cx.query(cmdSql, [Id]);
+        const cmdSql = 'DELETE FROM jogo WHERE id = ?';
+        const [execucao] = await cx.query(cmdSql, [id]);
         if(execucao.affectedRows > 0){ 
             cx.release();
             return [];
