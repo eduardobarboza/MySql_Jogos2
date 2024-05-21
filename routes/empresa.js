@@ -1,5 +1,5 @@
 import express from 'express';
-import * as Empresas from '../service/empresa.js';
+import * as Jogos from '../service/empresa.js';
 
 const router = express.Router();
 
@@ -8,9 +8,9 @@ router.get('/jogo', async (req, res) => {
         let nome = req.query.nome;
         let result;
         if (nome) {
-            result = await Empresas.consultar(nome);
+            result = await Jogos.consultar(nome);
         } else {
-            result = await Empresas.consultar();
+            result = await Jogos.consultar();
         }
         if (result.length > 0) {
             res.status(200).json(result);
@@ -32,7 +32,7 @@ router.get('/jogo', async (req, res) => {
 router.get('/jogo/:id', async (req, res) => {
     try {
         let id = req.params.id;
-        let result = await Empresas.consultarPorId(id);
+        let result = await Jogos.consultarPorId(id);
         if (result.length > 0) {
             res.status(200).json(result);
         } else {
@@ -52,10 +52,10 @@ router.get('/jogo/:id', async (req, res) => {
 
 router.post('/jogo',async(req,res)=>{
     try {
-        const { nome, valor } = req.body; // Supondo que os dados enviados tenham campos 'nome' e 'valorDeMercado'
+        const { id, nome, preço } = req.body; // Supondo que os dados enviados tenham campos 'nome' e 'valorDeMercado'
 
         // Chamar a função cadastrar com os dados recebidos
-        const novoJogo = await Empresas.cadastrar(nome, valor);
+        const novoJogo = await Jogos.cadastrar(id, nome, preço);
 
         // Enviar uma resposta com os dados da nova empresa cadastrada
         res.status(201).json(novoJogo);
@@ -73,10 +73,10 @@ router.post('/jogo',async(req,res)=>{
 router.put('/jogo/:id',async(req,res)=>{
     try {
         const id = req.params.id;
-        const { nome, valor } = req.body; // Supondo que os dados enviados tenham campos 'nome' e 'valorDeMercado'
+        const { nome, preço } = req.body; // Supondo que os dados enviados tenham campos 'nome' e 'valorDeMercado'
 
         // Chamar a função cadastrar com os dados recebidos
-        const jogoAlterado = await Empresas.alterar(id, nome, valor);
+        const jogoAlterado = await Jogos.alterar(id, nome, preço);
 
         // Enviar uma resposta com os dados da nova empresa cadastrada
         res.status(201).json(jogoAlterado);
@@ -94,7 +94,7 @@ router.put('/jogo/:id',async(req,res)=>{
 router.delete('/jogo/:id',async(req,res)=>{
     try{
         let id = req.params.id;
-        const result = await Empresas.deletar(id);
+        const result = await jogos.deletar(id);
         if(result.length == 0){
             res.status(204).json([]);
         }

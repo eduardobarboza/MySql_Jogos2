@@ -27,8 +27,8 @@ export const consultarPorId = async (id) => {
 export const cadastrar = async (nome, preço) => {
     try {
         const cx = await pool.getConnection();
-        const cmdSql = 'INSERT INTO jogo(nome, preço) VALUES (?, ?)';
-        const [execucao] = await cx.query(cmdSql, [nome, preço]);        
+        const cmdSql = 'INSERT INTO jogo(id, nome, preço) VALUES (?, ?)';
+        const [execucao] = await cx.query(cmdSql, [id, nome, preço]);        
         if(execucao.affectedRows > 0){
             const [result] = await cx.query('SELECT LAST_INSERT_ID() as lastId');
             const lastId = result[0].lastId;

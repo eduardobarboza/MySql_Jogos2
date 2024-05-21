@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors'; 
-import empresa from './routes/empresa.js';
+import jogo from './routes/empresa.js';
 
 const app = express();
 app.use(express.json());
@@ -10,7 +10,7 @@ app.get('/',(req,res)=>{
     res.status(200).json("{'Server':'ok'}");
 })
 
-app.use('/',empresa);
+app.use('/',jogo);
 
 app.listen(3000,()=>{
     let data = new Date();
