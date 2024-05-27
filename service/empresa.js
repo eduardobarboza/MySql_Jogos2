@@ -24,15 +24,15 @@ export const consultarPorId = async (id) => {
     }
 };
 
-export const cadastrar = async (nome, preço) => {
+export const cadastrar = async (id, nome, preço) => {
     try {
         const cx = await pool.getConnection();
-        const cmdSql = 'INSERT INTO jogo(id, nome, preço) VALUES (?, ?)';
+        const cmdSql = 'INSERT INTO jogo (id, nome, preço) VALUES (?, ?, ?)';
         const [execucao] = await cx.query(cmdSql, [id, nome, preço]);        
         if(execucao.affectedRows > 0){
-            const [result] = await cx.query('SELECT LAST_INSERT_ID() as lastId');
-            const lastId = result[0].lastId;
-            const [novoJogo, meta_dados] = await cx.query('SELECT * FROM jogo WHERE id = ?', [lastId]);
+            //const [result] = await cx.query('SELECT LAST_INSERT_ID() as lastId');
+            //const lastId = result[0].lastId;
+            const [novoJogo, meta_dados] = await cx.query('SELECT * FROM jogo WHERE id = ?', id);
             cx.release();
             return novoJogo;
         }
