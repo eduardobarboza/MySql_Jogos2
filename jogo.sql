@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Tempo de geração: 14/05/2024 às 13:19
+-- Tempo de geração: 27/05/2024 às 17:28
 -- Versão do servidor: 8.0.30
 -- Versão do PHP: 8.3.4
 
@@ -29,8 +29,8 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `jogo` (
   `id` int NOT NULL,
-  `nome` text NOT NULL,
-  `preço` varchar(100) NOT NULL
+  `nome` varchar(100) NOT NULL,
+  `preço` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
@@ -38,8 +38,30 @@ CREATE TABLE `jogo` (
 --
 
 INSERT INTO `jogo` (`id`, `nome`, `preço`) VALUES
-(1, 're4 remake', '250'),
-(2, 'minecraft', '100');
+(1, 'Carlinhos Horse Farm', 120),
+(2, 'Resident Evil 4: Remake', 250),
+(3, 'Pig Man ', 20000),
+(4, 'Eduardo', 4000);
+
+--
+-- Índices para tabelas despejadas
+--
+
+--
+-- Índices de tabela `jogo`
+--
+ALTER TABLE `jogo`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT para tabelas despejadas
+--
+
+--
+-- AUTO_INCREMENT de tabela `jogo`
+--
+ALTER TABLE `jogo`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
